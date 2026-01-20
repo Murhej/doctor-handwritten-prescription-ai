@@ -1,0 +1,251 @@
+{
+  "_brand_to_generic": {
+    "Ace": "Paracetamol",
+    "Aceta": "Paracetamol",
+    "Napa": "Paracetamol",
+    "NapaExtend": "Paracetamol",
+
+    "Alatrol": "Cetirizine",
+    "Atrizin": "Cetirizine",
+    "Cetisoft": "Cetirizine",
+    "Etizin": "Cetirizine",
+
+    "Axodin": "Fexofenadine",
+    "Fenadin": "Fexofenadine",
+    "Fexo": "Fexofenadine",
+    "Fexofast": "Fexofenadine",
+    "Telfast": "Fexofenadine",
+
+    "Az": "Azithromycin",
+    "Azyth": "Azithromycin",
+    "Azithrocin": "Azithromycin",
+    "Zithrin": "Azithromycin",
+    "Rozith": "Azithromycin",
+    "Romycin": "Azithromycin",
+
+    "Baclofen": "Baclofen",
+    "Baclon": "Baclofen",
+    "Bacmax": "Baclofen",
+    "Beklo": "Baclofen",
+    "Flexibac": "Baclofen",
+
+    "Monas": "Montelukast",
+    "Montair": "Montelukast",
+    "Montene": "Montelukast",
+    "Montex": "Montelukast",
+    "Odmon": "Montelukast",
+    "MKast": "Montelukast",
+
+    "Metro": "Metronidazole",
+    "Nidazyl": "Metronidazole",
+
+    "Diflu": "Fluconazole",
+    "Flugal": "Fluconazole",
+
+    "Canazole": "Ketoconazole",
+    "Ketocon": "Ketoconazole",
+    "Ketoral": "Ketoconazole",
+    "Ketozol": "Ketoconazole",
+    "Ketotab": "Ketoconazole",
+
+    "Nexcap": "Esomeprazole",
+    "Nexum": "Esomeprazole",
+    "Maxpro": "Esomeprazole",
+    "Sergel": "Esomeprazole",
+
+    "Rivotril": "Clonazepam"
+  },
+
+  "Paracetamol": {
+    "indication": "Pain & fever",
+    "typical_dose": "500–1000 mg every 4–6 hrs",
+    "max_daily_dose": "4000 mg/day",
+    "how_to_take": "Swallow with water",
+    "with_food": "Yes",
+    "pregnancy": "Safe",
+    "alcohol": "Avoid heavy drinking",
+    "driving": "Safe",
+    "storage": "Room temp, dry",
+    "missed_dose": "Take when remembered (never double)",
+    "do_not_use_if": "Severe liver disease",
+    "side_effects": "Rare liver toxicity",
+    "critical_warning": "Hidden in many cold meds → overdose risk",
+    "fun_fact": "One of the most used medicines on Earth — over 25 billion doses sold yearly."
+  },
+
+  "Azithromycin": {
+    "indication": "Bacterial chest, throat, skin, eye infections",
+    "typical_dose": "500 mg day 1 → 250 mg × 4 days",
+    "how_to_take": "Same time daily",
+    "with_food": "Yes",
+    "pregnancy": "Doctor only",
+    "alcohol": "Safe",
+    "driving": "Safe",
+    "storage": "Room temp",
+    "missed_dose": "Take ASAP (skip if near next)",
+    "do_not_use_if": "Allergy, heart rhythm disease",
+    "side_effects": "Diarrhea, nausea",
+    "critical_warning": "Not for viruses",
+    "fun_fact": "Stays in your body for up to 5 days after the last dose."
+  },
+
+  "Baclofen": {
+    "indication": "Muscle spasms",
+    "typical_dose": "5–10 mg 2–3× daily",
+    "how_to_take": "Same times daily",
+    "with_food": "Yes",
+    "pregnancy": "Avoid if possible",
+    "alcohol": "Dangerous",
+    "driving": "Unsafe",
+    "storage": "Room temp",
+    "missed_dose": "Skip — do NOT double",
+    "do_not_use_if": "Severe kidney disease",
+    "side_effects": "Drowsiness, weakness",
+    "critical_warning": "Never stop suddenly → seizures",
+    "fun_fact": "Originally developed to treat spinal cord injuries."
+  },
+
+  "Cetirizine": {
+    "indication": "Allergies, hives",
+    "typical_dose": "10 mg once daily",
+    "how_to_take": "At night if sleepy",
+    "with_food": "Yes",
+    "pregnancy": "Usually safe",
+    "alcohol": "Increases sleepiness",
+    "driving": "Caution",
+    "storage": "Room temp",
+    "missed_dose": "Take same day",
+    "do_not_use_if": "Severe kidney disease",
+    "side_effects": "Sleepiness",
+    "critical_warning": "Can impair driving",
+    "fun_fact": "Second-generation antihistamine = much less drowsy than older allergy meds."
+  },
+
+  "Metronidazole": {
+    "indication": "Dental, stomach, vaginal infections",
+    "typical_dose": "400–500 mg 2–3× daily",
+    "how_to_take": "After meals",
+    "with_food": "Yes",
+    "pregnancy": "Doctor only",
+    "alcohol": "STRICTLY FORBIDDEN",
+    "driving": "If dizzy",
+    "storage": "Room temp",
+    "missed_dose": "Take ASAP",
+    "do_not_use_if": "With alcohol",
+    "side_effects": "Metallic taste, nausea",
+    "critical_warning": "Alcohol = violent vomiting & collapse",
+    "fun_fact": "Alcohol with this drug can make people instantly vomit within minutes."
+  },
+
+  "Fexofenadine": {
+    "indication": "Seasonal allergies",
+    "typical_dose": "120–180 mg once daily",
+    "how_to_take": "With water only",
+    "with_food": "Yes",
+    "pregnancy": "Usually safe",
+    "alcohol": "Safe",
+    "driving": "Safe",
+    "storage": "Room temp",
+    "missed_dose": "Take same day",
+    "do_not_use_if": "Severe kidney disease",
+    "side_effects": "Headache",
+    "critical_warning": "Least sedating option",
+    "fun_fact": "Does NOT cross the brain easily—why it causes almost no drowsiness."
+  },
+
+  "Montelukast": {
+    "indication": "Asthma & allergies",
+    "typical_dose": "10 mg nightly",
+    "how_to_take": "Night only",
+    "with_food": "Yes",
+    "pregnancy": "Doctor only",
+    "alcohol": "Safe",
+    "driving": "If dizzy",
+    "storage": "Room temp",
+    "missed_dose": "Skip missed dose",
+    "do_not_use_if": "Depression history",
+    "side_effects": "Mood change",
+    "critical_warning": "Suicidal thoughts risk",
+    "fun_fact": "Works on immune chemicals instead of airway muscles."
+  },
+
+  "Esomeprazole": {
+    "indication": "GERD, ulcers",
+    "typical_dose": "20–40 mg once daily",
+    "how_to_take": "Morning before food",
+    "with_food": "No (empty stomach)",
+    "pregnancy": "Safe",
+    "alcohol": "Worsens reflux",
+    "driving": "Safe",
+    "storage": "Room temp",
+    "missed_dose": "Take same day",
+    "do_not_use_if": "Long-term without doctor",
+    "side_effects": "Headache, diarrhea",
+    "critical_warning": "Long-term use → bone loss & B12 deficiency",
+    "fun_fact": "It can shut down stomach acid by up to 90%."
+  },
+
+  "Ketoconazole": {
+    "indication": "Dandruff, fungal skin",
+    "typical_dose": "Shampoo 2–3× weekly",
+    "how_to_take": "Apply 5 min then rinse",
+    "with_food": "N/A",
+    "pregnancy": "Topical safe",
+    "alcohol": "Safe",
+    "driving": "Safe",
+    "storage": "Room temp",
+    "missed_dose": "Use next wash",
+    "do_not_use_if": "Oral form + liver disease",
+    "side_effects": "Skin irritation",
+    "critical_warning": "Oral form can cause liver failure",
+    "fun_fact": "Kills fungus by destroying its cell membrane."
+  },
+
+  "Fluconazole": {
+    "indication": "Yeast & fungal infections",
+    "typical_dose": "150 mg once OR 100–200 mg daily",
+    "how_to_take": "Same time daily",
+    "with_food": "Yes",
+    "pregnancy": "Avoid",
+    "alcohol": "Avoid",
+    "driving": "If dizzy",
+    "storage": "Room temp",
+    "missed_dose": "Take ASAP",
+    "do_not_use_if": "Liver disease",
+    "side_effects": "Nausea, headache",
+    "critical_warning": "Liver toxicity & heart rhythm risk",
+    "fun_fact": "One pill can sometimes cure a full yeast infection."
+  },
+
+  "Clonazepam": {
+    "indication": "Seizures, panic disorder",
+    "typical_dose": "Individual titration only",
+    "how_to_take": "Night if drowsy",
+    "with_food": "Yes",
+    "pregnancy": "Avoid",
+    "alcohol": "LETHAL risk",
+    "driving": "Dangerous",
+    "storage": "Locked, controlled area",
+    "missed_dose": "Skip, never double",
+    "do_not_use_if": "Addiction history",
+    "side_effects": "Sedation, memory loss",
+    "critical_warning": "Fatal overdose with alcohol or opioids",
+    "fun_fact": "Acts directly on brain calming receptors."
+  },
+
+  "Vitamin B Complex + Zinc": {
+    "indication": "Nerve health, fatigue",
+    "typical_dose": "1 tablet daily",
+    "how_to_take": "Morning after food",
+    "with_food": "Yes",
+    "pregnancy": "Safe",
+    "alcohol": "Safe",
+    "driving": "Safe",
+    "storage": "Cool, dry place",
+    "missed_dose": "Take same day",
+    "do_not_use_if": "Excess zinc intake",
+    "side_effects": "Nausea, yellow urine",
+    "critical_warning": "Long-term high B6 → nerve damage",
+    "fun_fact": "Your urine turns bright yellow because of vitamin B2."
+  }
+}
