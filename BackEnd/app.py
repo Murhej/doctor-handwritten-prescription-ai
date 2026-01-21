@@ -1,24 +1,35 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
-import json
 
-app = Flask(__name__)   # 🔴 THIS WAS MISSING
+app = Flask(__name__)
+CORS(app)  # ✅ THIS FIXES CORS
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-with open(os.path.join(BASE_DIR, "brand_to_generic.json"), "r", encoding="utf-8") as f:
-    brand_map = json.load(f)
-
-with open(os.path.join(BASE_DIR, "medicine_data.json"), "r", encoding="utf-8") as f:
-    medicine_info = json.load(f)
-
-@app.route("/")
+@app.route("/", methods=["GET"])
 def health():
-    return {"status": "Doctor Prescription AI running"}
+    return {"status": "ok"}
 
-@app.route("/drug/<name>")
-def get_drug(name):
-    generic = brand_map.get(name)
-    if not generic:
-        return jsonify({"error": "Brand not found"}), 404
-    return jsonify(medicine_info.get(generic, {"error": "Generic info missing"}))
+@app.route("/predict", methods=["POST"])
+def predict():
+    if "file" not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
+
+    file = request.files["file"]
+
+    # TODO: replace with real model logic
+    return jsonify({
+        "prediction": "Paracetamol",
+        "confidence": 0.94
+    })
+
+@app.route("/medicine/<drug>", methods=["GET"])
+def medicine(drug):
+    return jsonify({
+        "safety_info": {
+            "usage": "Pain relief",
+            "warnings": "Do not exceed recommended dose"
+        }
+    })
+
+if __name__ == "__main__":
+    app.run()
