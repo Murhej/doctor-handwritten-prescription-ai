@@ -6,3 +6,10 @@ pillow
 tensorflow
 flask-cors
 
+fastapi
+uvicorn
+python-multipart
+opencv-python
+numpy
+pillow
+
