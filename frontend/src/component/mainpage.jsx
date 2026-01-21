@@ -2,6 +2,8 @@ import { useState } from "react";
 import logo from "../assets/logo.png";
 import "./mainpage.css";
 
+const API_BASE = "https://doctor-handwritten-prescription.onrender.com";
+
 function Mainpage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -11,11 +13,6 @@ function Mainpage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [funFact, setFunFact] = useState("");
-  const API_BASE =
-  import.meta.env.PROD
-    ? "https://doctor-handwritten-prescription.onrender.com"
-    : "http://127.0.0.1:8000";
-
 
   // ✅ Handle file selection + preview
   const handleFileChange = (e) => {
@@ -36,56 +33,59 @@ function Mainpage() {
 
   // ✅ Send image to backend + fetch medicine safety
   const handlePredict = async () => {
-  if (!selectedFile) {
-    alert("Please select an image first.");
-    return;
-  }
-
-  setLoading(true);
-  setErrorMsg("");
-  setMedicineInfo(null);
-  setFunFact("");
-
-  const formData = new FormData();
-  formData.append("file", selectedFile);
-
-  try {
-    const response = await fetch(`${API_BASE}/predict`, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) throw new Error("Prediction failed");
-
-    const data = await response.json();
-
-    setPrediction(data.prediction);
-    setConfidence((data.confidence * 100).toFixed(2) + "%");
-
-    const medRes = await fetch(
-      `${API_BASE}/medicine/${data.prediction}`
-    );
-
-    const medData = await medRes.json();
-
-    if (medData.error) {
-      setMedicineInfo(null);
-      setFunFact("");
-      setErrorMsg("⚠️ No safety data found for this medicine.");
-    } else {
-      setMedicineInfo(medData.safety_info || null);
-      setFunFact(
-        `Did you know? ${data.prediction} is among the most commonly prescribed medications worldwide.`
-      );
+    if (!selectedFile) {
+      alert("Please select an image first.");
+      return;
     }
-  } catch (error) {
-    console.error("Prediction error:", error);
-    setErrorMsg("❌ Backend connection failed.");
-  }
 
-  setLoading(false);
-};
+    setLoading(true);
+    setErrorMsg("");
+    setMedicineInfo(null);
+    setFunFact("");
 
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      // 🔹 OCR prediction
+      const response = await fetch(`${API_BASE}/predict`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Prediction failed");
+      }
+
+      const data = await response.json();
+
+      setPrediction(data.prediction);
+      setConfidence((data.confidence * 100).toFixed(2) + "%");
+
+      // 🔹 Fetch medicine safety info
+      const medRes = await fetch(
+        `${API_BASE}/medicine/${data.prediction}`
+      );
+
+      const medData = await medRes.json();
+
+      if (medData.error) {
+        setMedicineInfo(null);
+        setFunFact("");
+        setErrorMsg("⚠️ No safety data found for this medicine.");
+      } else {
+        setMedicineInfo(medData.safety_info || null);
+        setFunFact(
+          `Did you know? ${data.prediction} is among the most commonly prescribed medications worldwide.`
+        );
+      }
+    } catch (error) {
+      console.error("Prediction error:", error);
+      setErrorMsg("❌ Backend connection failed.");
+    }
+
+    setLoading(false);
+  };
 
   return (
     <div className="mainpage">
@@ -112,14 +112,11 @@ function Mainpage() {
             {loading ? "Predicting..." : "Run Prediction"}
           </button>
 
-          {/* ✅ MEDICAL DISCLAIMER ✅ */}
           <p className="disclaimer">
             ⚠️ This system is for educational purposes only and must NOT be used
-            for medical diagnosis or treatment. Always consult a licensed
-            doctor or pharmacist.
+            for medical diagnosis or treatment.
           </p>
 
-          {/* ✅ OCR RESULT */}
           {prediction && (
             <div className="result-box">
               <p><b>Prediction:</b> {prediction}</p>
@@ -127,7 +124,6 @@ function Mainpage() {
             </div>
           )}
 
-          {/* ✅ MEDICINE SAFETY POPUP MODAL */}
           {medicineInfo && (
             <div
               className="modal-overlay"
@@ -152,7 +148,6 @@ function Mainpage() {
                   </p>
                 ))}
 
-                {/* ✅ FUN FACT SECTION ✅ */}
                 {funFact && (
                   <div className="fun-fact">
                     <h4>🧠 Fun Fact</h4>
@@ -163,12 +158,10 @@ function Mainpage() {
             </div>
           )}
 
-          {/* ✅ ERROR MESSAGE */}
           {errorMsg && <p className="error">{errorMsg}</p>}
         </div>
       </div>
 
-      {/* ---------- FOOTER ---------- */}
       <footer className="footer">
         <p>© 2025 Murhej Hantoush | AI Prescription Recognition</p>
       </footer>
