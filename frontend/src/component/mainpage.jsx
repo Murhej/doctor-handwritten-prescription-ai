@@ -11,6 +11,11 @@ function Mainpage() {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [funFact, setFunFact] = useState("");
+  const API_BASE =
+  import.meta.env.PROD
+    ? "https://doctor-handwritten-prescription.onrender.com"
+    : "http://127.0.0.1:8000";
+
 
   // ✅ Handle file selection + preview
   const handleFileChange = (e) => {
@@ -31,57 +36,56 @@ function Mainpage() {
 
   // ✅ Send image to backend + fetch medicine safety
   const handlePredict = async () => {
-    if (!selectedFile) {
-      alert("Please select an image first.");
-      return;
-    }
+  if (!selectedFile) {
+    alert("Please select an image first.");
+    return;
+  }
 
-    setLoading(true);
-    setErrorMsg("");
-    setMedicineInfo(null);
-    setFunFact("");
+  setLoading(true);
+  setErrorMsg("");
+  setMedicineInfo(null);
+  setFunFact("");
 
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+  const formData = new FormData();
+  formData.append("file", selectedFile);
 
-    try {
-      // ✅ OCR Prediction
-      const response = await fetch("http://127.0.0.1:8000/predict", {
-        method: "POST",
-        body: formData,
-      });
+  try {
+    const response = await fetch(`${API_BASE}/predict`, {
+      method: "POST",
+      body: formData,
+    });
 
-      const data = await response.json();
+    if (!response.ok) throw new Error("Prediction failed");
 
-      setPrediction(data.prediction);
-      setConfidence((data.confidence * 100).toFixed(2) + "%");
+    const data = await response.json();
 
-      // ✅ Fetch medicine safety info
-      const medRes = await fetch(
-        `http://127.0.0.1:8000/medicine/${data.prediction}`
+    setPrediction(data.prediction);
+    setConfidence((data.confidence * 100).toFixed(2) + "%");
+
+    const medRes = await fetch(
+      `${API_BASE}/medicine/${data.prediction}`
+    );
+
+    const medData = await medRes.json();
+
+    if (medData.error) {
+      setMedicineInfo(null);
+      setFunFact("");
+      setErrorMsg("⚠️ No safety data found for this medicine.");
+    } else {
+      setMedicineInfo(medData.safety_info || null);
+      setFunFact(
+        `Did you know? ${data.prediction} is among the most commonly prescribed medications worldwide.`
       );
-
-      const medData = await medRes.json();
-
-      if (medData.error) {
-        setMedicineInfo(null);
-        setFunFact("");
-        setErrorMsg("⚠️ No safety data found for this medicine.");
-      } else {
-        setMedicineInfo(medData.safety_info || null);
-
-        // ✅ Fun Fact Auto-Generator
-        setFunFact(
-          `Did you know? ${data.prediction} is among the most commonly prescribed medications worldwide.`
-        );
-      }
-    } catch (error) {
-      console.error("Prediction error:", error);
-      alert("❌ Backend connection failed.");
     }
+  } catch (error) {
+    console.error("Prediction error:", error);
+    setErrorMsg("❌ Backend connection failed.");
+  }
 
-    setLoading(false);
-  };
+  setLoading(false);
+};
+
 
   return (
     <div className="mainpage">
