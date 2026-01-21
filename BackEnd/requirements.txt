@@ -1,0 +1,7 @@
+flask
+gunicorn
+numpy
+opencv-python
+pillow
+fastapi
+uvicorn
