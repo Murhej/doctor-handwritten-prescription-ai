@@ -1,9 +1,12 @@
+import os
 import json
 
-with open("brand_to_generic.json") as f:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+with open(os.path.join(BASE_DIR, "brand_to_generic.json"), "r", encoding="utf-8") as f:
     brand_map = json.load(f)
 
-with open("medicine_info.json") as f:
+with open(os.path.join(BASE_DIR, "medicine_info.json"), "r", encoding="utf-8") as f:
     medicine_info = json.load(f)
 
 def get_drug_info(ocr_prediction):
