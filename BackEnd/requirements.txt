@@ -1,4 +1,3 @@
-flask
 gunicorn
 numpy
 opencv-python
@@ -12,4 +11,5 @@ python-multipart
 opencv-python
 numpy
 pillow
+
 
