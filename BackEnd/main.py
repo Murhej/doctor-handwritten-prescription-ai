@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(BASE_DIR, "medicine_data.json"), "r", encoding="utf-8") as f:
     MEDICINE_DB = json.load(f)
 
-BRAND_MAP = MEDICINE_DB.get("_brand_to_generic", {})
+BRAND_MAP = MEDICINE_DB.get("medicine_data", {})
 
 @app.get("/")
 def home():
@@ -40,7 +40,7 @@ def get_medicine_info(name: str):
     key = urllib.parse.unquote(name).strip()
 
     # 1️⃣ Exact generic
-    if key in MEDICINE_DB and key != "_brand_to_generic":
+    if key in MEDICINE_DB and key != "medicine_data":
         return {
             "medicine": key,
             "brand": None,
