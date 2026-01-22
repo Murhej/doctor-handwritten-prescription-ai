@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from BackEnd.predict import predict_image_bytes
+from predict import predict_image_bytes
 import json
 import os
 
