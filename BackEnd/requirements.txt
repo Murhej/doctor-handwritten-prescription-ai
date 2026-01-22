@@ -1,15 +1,10 @@
-gunicorn
+fastapi
+uvicorn
+python-multipart
+
 numpy
 opencv-python
 pillow
 tensorflow
-flask-cors
 
-fastapi
-uvicorn
-python-multipart
-opencv-python
-numpy
-pillow
-
-
+gunicorn
