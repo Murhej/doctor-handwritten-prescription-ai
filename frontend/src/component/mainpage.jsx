@@ -2,7 +2,7 @@ import { useState } from "react";
 import logo from "../assets/logo.png";
 import "./mainpage.css";
 
-const API_BASE = "https://doctor-handwritten-prescription.onrender.com";
+const API_BASE = "https://doctor-handwritten-prescription-ai.onrender.com";
 
 function Mainpage() {
   const [selectedFile, setSelectedFile] = useState(null);
