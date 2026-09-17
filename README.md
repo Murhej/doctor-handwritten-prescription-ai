@@ -1,421 +1,267 @@
-<div align="center">
+## Doctor Handwritten Prescription AI
 
-# 🩺 Doctor Handwritten Prescription AI
+Doctor Handwritten Prescription AI is a full-stack application that classifies a handwritten prescription image as a medicine name and displays the model confidence. When matching medicine data is available, the frontend also shows the corresponding safety information.
 
-### AI-powered prescription handwriting recognition with a clean full-stack web experience
+This is an educational portfolio project for exploring image classification, TensorFlow model serving, and frontend-to-backend integration. It is not a diagnostic or prescribing tool.
 
-Turn difficult-to-read handwritten prescription images into clearer, structured digital text using AI, OCR, and image-processing techniques.
+## The Problem
 
-<br>
+Handwritten medicine names are difficult to interpret consistently, especially when the source image is noisy or the handwriting is unclear. This project explores a constrained version of that problem: recognizing medicine-word classes from prescription images using a trained neural network.
 
-![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![React](https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![JavaScript](https://img.shields.io/badge/JavaScript-Web_App-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![AI](https://img.shields.io/badge/AI-Handwriting_Recognition-7B61FF?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Portfolio_Project-success?style=for-the-badge)
+## Why I Built It
 
-<br>
+The repository combines a trained image model with a usable browser workflow. It demonstrates how to:
 
-[Overview](#-overview) •
-[Features](#-features) •
-[How It Works](#-how-it-works) •
-[Tech Stack](#-tech-stack) •
-[Installation](#-installation) •
-[Challenges](#-technical-challenges) •
-[Future Improvements](#-future-improvements)
+- accept an uploaded image in a React interface
+- send the image to a Python API as multipart form data
+- preprocess the image for a TensorFlow model
+- map the predicted class to a medicine name
+- look up local medicine safety information
+- present prediction confidence and results in the UI
 
-</div>
+## Key Features
 
----
+- Upload a prescription image and preview it in the browser.
+- Submit the image to the backend prediction endpoint.
+- Convert the model output into a medicine name and confidence percentage.
+- Look up medicine information from the bundled `medicine_data.json` file.
+- Resolve a known brand name to its generic medicine when the data file contains that mapping.
+- Display medicine safety fields in a modal dialog.
+- Show connection and missing-medicine errors in the frontend.
 
-## 🌟 Overview
-
-**Doctor Handwritten Prescription AI** is a full-stack AI project built to explore one of the most difficult real-world OCR problems: interpreting handwritten medical prescriptions.
-
-The application allows a user to upload a prescription image, sends it to a Python backend for processing, applies image-processing and recognition techniques, and returns a more readable digital result through a web interface.
-
-This project was created as a practical AI/software-development portfolio project focused on combining:
-
-- artificial intelligence
-- OCR and handwriting recognition
-- image preprocessing
-- backend API development
-- frontend development
-- real-world problem solving
-
----
-
-## 🎯 The Problem
-
-Handwritten prescriptions can be difficult to interpret because handwriting varies significantly between people.
-
-Recognition becomes even more difficult when an image contains:
-
-- unclear handwriting
-- abbreviations
-- unusual medication names
-- poor lighting
-- low resolution
-- shadows or blur
-- inconsistent spacing
-- overlapping characters
-
-Traditional OCR performs best on clean printed text, so handwritten prescriptions create a much harder recognition problem.
-
----
-
-## 💡 Why I Built This Project
-
-I wanted to build an AI project around a meaningful real-world problem rather than only training a model in isolation.
-
-The main goals were to:
-
-- explore how AI can interpret difficult handwriting
-- understand the limitations of traditional OCR
-- improve recognition through image preprocessing
-- connect an AI-processing workflow to a usable web interface
-- practice full-stack development
-- design an application around a realistic user workflow
-
-This project helped me move from **"building a model"** to **"building an AI-powered product."**
-
----
-
-## ✨ Features
-
-| Feature | Description |
-|---|---|
-| 📤 **Prescription Upload** | Upload a handwritten prescription image through the web interface |
-| 🖼️ **Image Processing** | Prepare the uploaded image before recognition |
-| 🤖 **AI / OCR Recognition** | Analyze handwritten text and attempt to extract readable content |
-| 🔌 **Backend API** | Connect frontend requests to the Python processing pipeline |
-| 🖥️ **Web Interface** | Provide a simple experience for uploading images and viewing results |
-| 📄 **Readable Output** | Display extracted text in a clearer digital format |
-| 🧩 **Full-Stack Integration** | Combine frontend, backend, and AI processing in one application |
-
----
-
-## 🔄 How It Works
+## System Architecture
 
 ```text
-┌──────────────────────┐
-│ Prescription Image   │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Frontend Upload      │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Backend API          │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Image Preprocessing  │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ OCR / AI Recognition │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Extracted Text       │
-└──────────┬───────────┘
-           │
-           ▼
-┌──────────────────────┐
-│ Result Display       │
-└──────────────────────┘
+React + Vite frontend
+    |
+    | POST /predict (multipart image)
+    v
+FastAPI application
+    |
+    v
+TensorFlow/Keras model
+    |
+    | predicted class + softmax confidence
+    v
+React result view
+    |
+    | GET /medicine/{name}
+    v
+Bundled medicine_data.json
+    |
+    v
+Safety information modal
 ```
 
-### Application Flow
+The frontend currently calls the deployed backend URL hard-coded in `frontend/src/component/mainpage.jsx`:
+`https://doctor-handwritten-prescription-ai.onrender.com`.
 
-1. The user uploads a handwritten prescription image.
-2. The frontend sends the image to the backend.
-3. The backend prepares the image for analysis.
-4. The recognition pipeline processes the handwriting.
-5. Extracted or predicted text is returned.
-6. The frontend displays the result to the user.
+## Tech Stack
 
----
+### Programming Languages
 
-## 🧰 Tech Stack
+- Python
+- JavaScript
+- HTML and CSS
 
 ### Frontend
 
-- **React**
-- **JavaScript**
-- **HTML**
-- **CSS**
+- React 19
+- React DOM
+- Vite
+- ESLint
 
 ### Backend
 
-- **Python**
-- Backend API for handling uploads and AI-processing requests
+- FastAPI
+- Uvicorn
+- `python-multipart` for uploaded files
+- FastAPI CORS middleware
 
-### AI / Computer Vision
+### AI / Machine Learning / Computer Vision
 
-- OCR-based text recognition
-- handwriting recognition
-- image preprocessing
-- image-analysis workflow
+- TensorFlow and Keras
+- NumPy
+- Pandas for the training-data pipeline in `BackEnd/Project.py`
+- A bundled `.keras` model, with an `.h5` fallback
+- Grayscale image decoding, normalization, and resizing with `tf.image`
+- A CRNN-style training script in `BackEnd/Project.py` using convolutional layers, a bidirectional LSTM, and a softmax classifier
 
-> **Note:** Update this section with the exact AI and backend libraries used in the project if applicable, such as OpenCV, TensorFlow, PyTorch, Tesseract, EasyOCR, Flask, FastAPI, or similar tools.
+`opencv-python` and `Pillow` are listed in the backend requirements, but the inspected Python source does not directly import either library. No standalone Tesseract, EasyOCR, or other OCR package is used.
 
----
+### Data and Storage
 
-## 📁 Project Structure
+- JSON files for the medicine data and model vocabulary
+- No database is configured or used
+
+### Cloud / External Services
+
+- The frontend is configured to call a Render-hosted backend at `https://doctor-handwritten-prescription-ai.onrender.com`.
+- No external AI API or third-party medicine service is used by the application code.
+
+### Development Tools
+
+- npm and the committed `frontend/package-lock.json`
+- Uvicorn development server
+- ESLint
+
+## How It Works
+
+1. The user selects an image in the React frontend.
+2. The browser creates a local preview with `FileReader`.
+3. Clicking **Run Prediction** sends the file as the `file` field in a `POST /predict` request.
+4. The backend decodes the bytes as PNG, converts the image to one grayscale channel, normalizes it, and resizes it to `64 x 256` pixels.
+5. The backend lazily loads `crnn_prescription_model.keras` when available, otherwise it uses `crnn_prescription_model.h5`.
+6. The highest-probability class is mapped through `id2word.json` and returned as `prediction` with a numeric `confidence`.
+7. The frontend requests `GET /medicine/{prediction}` and, when a match exists, renders the returned safety fields in a modal.
+
+The backend also exposes `GET /`, which returns a simple status response.
+
+## API Surface
+
+| Method | Path | Purpose |
+|---|---|---|
+| `GET` | `/` | Returns a backend status response |
+| `POST` | `/predict` | Accepts an uploaded image in the `file` form field and returns a prediction and confidence |
+| `GET` | `/medicine/{name}` | Returns generic/brand information and safety data when the medicine exists in the bundled JSON |
+
+## Technical Challenges
+
+- **Image input constraints:** The inference path uses TensorFlow PNG decoding and a fixed `64 x 256` input shape, so input format and normalization affect whether prediction succeeds.
+- **Class vocabulary management:** Predictions are integer class IDs and require the bundled `id2word.json` mapping to produce medicine names.
+- **Model and API integration:** The backend must load large model resources and return a small JSON response suitable for the browser.
+- **Medicine matching:** The lookup endpoint handles exact generic names, brand-to-generic mappings, and case-insensitive generic-name fallback.
+- **Medical safety communication:** The UI labels the system as educational and warns users not to use its output for diagnosis or treatment.
+
+## Project Structure
 
 ```text
 doctor-handwritten-prescription-ai/
-│
 ├── BackEnd/
-│   └── backend application and AI-processing code
-│
+│   ├── main.py                         # FastAPI routes
+│   ├── predict.py                      # Model loading and inference
+│   ├── Project.py                      # CRNN training/evaluation script
+│   ├── crnn_prescription_model.keras   # Preferred inference model
+│   ├── crnn_prescription_model.h5      # Fallback inference model
+│   ├── id2word.json                    # Class ID to medicine mapping
+│   ├── medicine_data.json              # Medicine safety data and mappings
+│   └── requirements.txt
 ├── frontend/
-│   └── React frontend application
-│
+│   ├── src/
+│   │   ├── App.jsx
+│   │   └── component/mainpage.jsx      # Upload, prediction, and result UI
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
 └── README.md
 ```
 
-For a cleaner long-term structure, the repository can later be standardized to:
+## Installation
 
-```text
-doctor-handwritten-prescription-ai/
-│
-├── backend/
-├── frontend/
-├── assets/
-│   └── screenshots/
-├── .gitignore
-├── LICENSE
-└── README.md
-```
+### Prerequisites
 
----
+- Python with TensorFlow support
+- Node.js and npm
+- The model and JSON files included in `BackEnd/`
 
-## 🧠 Technical Challenges
+### Backend
 
-### 1. Handwriting Variability
-
-Printed text follows predictable shapes and spacing. Handwriting does not.
-
-Different writing styles can drastically affect recognition quality, making handwritten prescriptions much harder than standard OCR tasks.
-
-### 2. Image Quality
-
-Recognition performance can change significantly depending on:
-
-- lighting
-- blur
-- camera angle
-- contrast
-- shadows
-- background noise
-- image resolution
-
-Preprocessing therefore becomes an important part of the recognition pipeline.
-
-### 3. Medical Vocabulary
-
-Medication names and medical terminology can contain uncommon words that standard OCR systems may not recognize well.
-
-### 4. Frontend and Backend Integration
-
-Another challenge was connecting the AI-processing workflow with a web interface so users could upload an image and receive a result through a simple application flow.
-
-### 5. Reliability
-
-A system working with medical text must clearly communicate uncertainty.
-
-Because handwriting recognition is imperfect, this project is designed as an educational AI application rather than a medical decision-making system.
-
----
-
-## 📚 What I Learned
-
-Building this project strengthened my experience with:
-
-- Python development
-- JavaScript
-- React
-- frontend/backend integration
-- API communication
-- image preprocessing
-- OCR concepts
-- computer vision
-- debugging full-stack applications
-- designing AI workflows
-- handling real-world input variability
-- communicating AI limitations responsibly
-
----
-
-## 🚀 Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Murhej/doctor-handwritten-prescription-ai.git
-cd doctor-handwritten-prescription-ai
-```
-
-### 2. Start the backend
+From the repository root:
 
 ```bash
 cd BackEnd
-pip install -r requirements.txt
-python main.py
+python -m venv .venv
 ```
 
-### 3. Start the frontend
+Activate the environment, then install the declared runtime dependencies:
 
-Open a second terminal:
+**Windows PowerShell**
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+**macOS/Linux**
+
+```bash
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+Start the API from inside `BackEnd/`:
+
+```bash
+uvicorn main:app --reload
+```
+
+The local API will normally be available at `http://127.0.0.1:8000`.
+
+### Frontend
+
+In a second terminal:
 
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 ```
 
-Then open the local development URL shown in your terminal.
+The Vite server will print the local frontend URL, normally `http://localhost:5173`.
 
----
+## Usage
 
-## 🧪 Example Usage
+1. Start the backend and frontend using the commands above.
+2. Open the Vite URL in a browser.
+3. Select a prescription image.
+4. Review the image preview and click **Run Prediction**.
+5. Review the predicted medicine and confidence.
+6. If the medicine exists in the bundled data, review its safety information.
 
-### Input
+The frontend does not currently read an environment variable for the API URL. For local backend testing, change `API_BASE` in `frontend/src/component/mainpage.jsx` from the Render URL to `http://127.0.0.1:8000`.
 
-Upload a photo or scanned image of a handwritten prescription.
+## Screenshots
 
-### Processing
+The repository contains a logo asset but no application screenshots.
 
-The image is sent through the backend recognition workflow.
+<!-- Add application screenshots here -->
 
-### Output
+## Results / Evaluation
 
-The application returns extracted or predicted prescription text in a clearer, readable form.
+The repository contains training and test-evaluation code in `BackEnd/Project.py`, including accuracy output for the test set and a best-checkpoint evaluation. However, no recorded accuracy, dataset size, inference-time measurement, or other benchmark result is included in the repository. No performance numbers are claimed here.
 
----
+## Limitations
 
-## 📸 Screenshots
+- The inference code decodes PNG bytes specifically; other image formats may not work even though the browser file input is generic.
+- The model returns one medicine class rather than a structured prescription containing dosage, frequency, duration, or multiple medicines.
+- Confidence is the maximum softmax probability and is not presented as a calibrated medical certainty.
+- The frontend depends on a hard-coded backend URL and has no environment-based configuration.
+- The training script uses a developer-specific Windows dataset path (`C:\Doctor's Handwritten Prescription BD dataset`) and is not directly reproducible without that dataset and its expected CSV/image layout.
+- The training script imports Pandas, but `BackEnd/requirements.txt` does not currently include it; the listed requirements are sufficient only for the checked-in inference API after the other dependencies are installed.
+- The backend enables permissive CORS for all origins.
+- There are no automated application tests in the repository.
 
-Add 2–4 screenshots here to make the repository much more attractive to recruiters.
+## Future Improvements
 
-Recommended screenshots:
+- Add environment-based frontend API configuration.
+- Validate file types and return clearer backend errors for unsupported images.
+- Add automated backend and frontend tests.
+- Publish reproducible dataset and training instructions without machine-specific paths.
+- Record and publish evaluation metrics from a defined held-out test set.
+- Add calibrated confidence or abstention behavior for uncertain predictions.
+- Support structured extraction of medicine, dosage, frequency, and duration.
+- Restrict CORS and add production-oriented request validation.
 
-1. **Home / Upload Screen**
-2. **Prescription Uploaded**
-3. **Recognition Result**
-4. **Mobile or Responsive View**
-
-Example:
-
-```markdown
-![Application Home](assets/screenshots/home.png)
-![Recognition Result](assets/screenshots/result.png)
-```
-
----
-
-## 📊 Results & Evaluation
-
-For a stronger AI portfolio project, add measurable performance results when available.
-
-Useful metrics could include:
-
-- OCR accuracy
-- character error rate
-- word error rate
-- recognition confidence
-- test-set accuracy
-- processing time
-
-Example format:
-
-| Metric | Result |
-|---|---:|
-| Recognition Accuracy | Add result |
-| Average Processing Time | Add result |
-| Test Samples | Add result |
-
-> Avoid adding performance claims unless they are measured from the project.
-
----
-
-## 🔮 Future Improvements
-
-Potential improvements include:
-
-- improve handwriting-recognition accuracy
-- add medication-name validation
-- introduce confidence scores
-- detect medication name, dosage, and frequency separately
-- improve image preprocessing
-- support multiple languages
-- improve mobile responsiveness
-- train on a larger handwriting dataset
-- improve error handling
-- add structured prescription output
-- add model-performance evaluation
-
----
-
-## ⚠️ Limitations
-
-Handwritten medical-text recognition is a difficult AI problem.
-
-The application may produce incorrect results when:
-
-- handwriting is extremely unclear
-- images are blurry
-- lighting is poor
-- characters overlap
-- the prescription contains unusual abbreviations
-- medication names are uncommon
-- image quality is low
-
-Any extracted result should be independently verified.
-
----
-
-## 🛡️ Medical Disclaimer
+## Medical Disclaimer
 
 > **This project is for educational, research, and portfolio purposes only.**
+>
+> It is not a certified medical device. Do not use its output to identify medication, determine dosage, change treatment, or make medical decisions. Prescription information must be verified by a qualified healthcare professional.
 
-It is **not a certified medical device**.
+## Author
 
-Do not use the application's output to:
+**Murhej Hantoush**
 
-- identify medication without verification
-- determine dosage
-- change treatment
-- make medical decisions
-- replace consultation with a physician or pharmacist
-
-Prescription information should always be verified by a qualified healthcare professional.
-
----
-
-## 👨‍💻 Author
-
-### Murhej
-
-AI / Software Development Portfolio Project
-
-GitHub: [@Murhej](https://github.com/Murhej)
-
----
-
-<div align="center">
-
-### ⭐ If you found this project interesting, consider starring the repository.
-
-Built as a practical exploration of **AI + OCR + Full-Stack Development**.
-
-</div>
+- GitHub: [Murhej](https://github.com/Murhej)
+- LinkedIn: [murhej-hantoush](https://www.linkedin.com/in/murhej-hantoush-928a90198/)
+- Email: [murhej.hantoush.work@gmail.com](mailto:murhej.hantoush.work@gmail.com)
